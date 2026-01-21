@@ -1,4 +1,4 @@
-name: sysfoo-ci
+name: docker ci pipeline
 on: push
 jobs:
   sysfooci-job:
