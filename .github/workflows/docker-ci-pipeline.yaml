@@ -20,7 +20,7 @@ jobs:
                password: ${{ secrets.DOCKER_TOCKEN }}
                
        - name: push image
-         run: docker push -t ${{ vars.DOCKER_USERNAME }}/heloworld-demo-phython:v1
+         run: docker push ${{ vars.DOCKER_USERNAME }}/heloworld-demo-phython:v1
 
     
           
