@@ -8,13 +8,16 @@ jobs:
          uses: actions/checkout@v6
          
        - name: Build image
-         run: docker build -t ${{ vars.DOCKER_USERNAME }}/heloworld-demo-phython:v2 .
+         run: docker build -t ${{ vars.DOCKER_USERNAME }}/heloworld-demo-phython-forked:v2 .
          
        - name: verify image
          run: docker images
 
        - name: create container
          run: docker run --name python-app -ltd -p 8080:8080 ${{ vars.DOCKER_USERNAME }}/heloworld-demo-phython:v2
+         
+       - name: sleep
+         run: sleep 200
          
        - name: view container
          run: docker ps
