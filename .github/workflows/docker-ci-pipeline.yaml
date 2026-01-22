@@ -15,15 +15,16 @@ jobs:
 
        - name: create container
          run: docker run --name python-app -itd -p 8080:8080 ${{ vars.DOCKER_USERNAME }}/heloworld-demo-phython-forked:v2
-         
-       - name: sleep
-         run: sleep 20
-         
+        
+          
        - name: view container
          run: docker ps
 
+       - name: sleep
+         run: sleep 20
+
        - name: check output
-         run: curl https://localhost:8080
+         run: curl -f https://localhost:8080
          
        - name: Docker Login
          uses: docker/login-action@v3.6.0
