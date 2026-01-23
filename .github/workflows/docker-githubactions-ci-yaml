@@ -2,7 +2,7 @@
 name: docker-githubactions
 on: push
 jobs:
- githubactions-job:
+ nginx:
     runs-on: ubuntu-latest
     steps:
        - name: Code Checkout
