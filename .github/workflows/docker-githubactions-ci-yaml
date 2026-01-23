@@ -20,7 +20,7 @@ jobs:
         run: docker images
  
       - name: create container
-        run: docker run --name python-app -itd -p 8080:8080 ${{ vars.DOCKER_USERNAME }}/heloworld-demo-phython-forked:v2
+        run: docker run --name myapp -itd -p 8080:8080 ${{ vars.DOCKER_USERNAME }}/heloworld-demo-phython-forked:v2
  
       - name: view container
         run: docker ps
