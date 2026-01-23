@@ -1,4 +1,4 @@
-name: Docker CI Pipeline
+name: Docker-githubactions-ci
 on: 
   push:
     paths-ignore:
