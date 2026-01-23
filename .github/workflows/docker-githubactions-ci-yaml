@@ -1,1 +1,66 @@
 
+name: docker-ci-pipeline
+on: push
+jobs:
+  sysfooci-job:
+    runs-on: ubuntu-latest
+    steps:
+       - name: Code Checkout
+         uses: actions/checkout@v6
+         
+       - name: Build image
+         run: docker build -t ${{ vars.DOCKER_USERNAME }}/heloworld-demo-phython-forked:v2 .
+         
+       - name: verify image
+         run: docker images
+
+       - name: create container
+         run: docker run --name python-app -itd -p 8080:8080 ${{ vars.DOCKER_USERNAME }}/heloworld-demo-phython-forked:v2
+        
+          
+       - name: view container
+         run: docker ps
+
+       - name: sleep
+         run: sleep 20
+
+       - name: check output
+         run: curl -f http://localhost:8080
+         
+       - name: Docker Login
+         uses: docker/login-action@v3.6.0
+         with:
+               username: ${{ vars.DOCKER_USERNAME }}
+               password: ${{ secrets.DOCKER_TOCKEN }}
+               
+       - name: push image
+         run: docker push ${{ vars.DOCKER_USERNAME }}/heloworld-demo-phython-forked:v2
+         
+       - name: container cleanup
+         run: docker rm -f python-app
+
+        k8scd-job:
+        runs-on: ubuntu-latest
+        needs: [dockerci-job]
+        steps:
+        - name: code-checkout
+          uses: actions/checkout@v6
+          
+        -name: start minikube
+         uses: medyagh/setup-minikube@latest
+        
+                - name: test-minikube
+          run: kubectl get pods -A
+          
+        -name: apply-yaml-files
+          run: kubctl apply -f k8s /.
+               kubectl wait --for=conditions=ready pod -l app=myapp
+
+        - name: get-status-deployments
+        run: 
+          kubectl get ns
+          kubectl deploy, service -n python-app
+
+        -name test service list
+          run: kubectl service my-service --url
+          echo
